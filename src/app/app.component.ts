@@ -1,10 +1,89 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {NotificationService} from "./common";
+import {FormHelper, urlValidator} from "./form/utils";
+import {positionLevel} from "./data";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'jobs-form';
+export class AppComponent implements OnInit {
+
+  positionLevels$ = positionLevel
+  jobForm!: FormGroup;
+  constructor(private fb: FormBuilder,
+              private notificationService: NotificationService,
+              public readonly formHelper: FormHelper,
+  ) {
+
+  }
+
+  ngOnInit() {
+    this.jobForm = this.fb.group({
+      jobs: this.fb.array([])
+    });
+
+
+  }
+
+  get companyUrl() {
+    return this.jobForm.get('companyUrl');
+  }
+
+
+  get jobs(): FormArray {
+    return this.jobForm.get('jobs') as FormArray;
+  }
+
+  addJob(): void {
+    const jobFormGroup = this.fb.group({
+      companyName: ['', Validators.required],
+      companyUrl: ['', [urlValidator()], []],
+      companyDescription: ['', Validators.required],
+      positions: this.fb.array([])
+
+    });
+    setTimeout(() => {
+      jobFormGroup.markAsUntouched();
+    }, 0);
+    this.jobs.push(jobFormGroup);
+
+  }
+
+  removeJob(index: number): void {
+    this.jobs.removeAt(index);
+  }
+
+  addPosition(jobIndex: number): void {
+    if (this.jobForm.invalid) {
+      console.log(this.jobForm)
+      this.formHelper.markFormDirty(this.jobForm);
+      return this.notificationService.warning('please fill-up all fields')
+    }
+    const positions = this.jobs.at(jobIndex).get('positions') as FormArray;
+    const positionFormGroup = this.fb.group({
+      positionName: ['', Validators.required],
+      positionLevel: ['', Validators.required],
+      startDate: ['', Validators.required],
+      currWorking: [false,],
+      endDate: ['',]
+    });
+    setTimeout(() => {
+      positionFormGroup.markAsUntouched();
+    }, 0);
+    positions.push(positionFormGroup);
+  }
+
+
+  removePosition(jobIndex: number, positionIndex: number): void {
+    const positions = this.jobs.at(jobIndex).get('positions') as FormArray;
+    positions.removeAt(positionIndex);
+  }
+
+
+  getPositions(jobIndex: number): FormArray {
+    return this.jobs.at(jobIndex).get('positions') as FormArray;
+  }
 }
