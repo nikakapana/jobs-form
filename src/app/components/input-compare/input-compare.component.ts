@@ -25,26 +25,27 @@ export class InputCompareComponent implements OnInit {
   }
 
 
-  private calculateMatchPercentages(): void {
-    this.matchPercentages = this.value2.map(item => this.calculateMatchPercentage(this.value1, item));
+  calculateMatchPercentages(): void {
+    for (const item of this.value2) {
+      this.matchPercentages.push(this.calculateMatchPercentage(this.value1.toLowerCase(), item.toLowerCase()));
+    }
   }
 
-  private calculateMatchPercentage(value1: string, value2: string): number {
+  calculateMatchPercentage(value1: string, value2: string): number {
     if (!value2.length) return 0;
-    const commonLength = this.getCommonSubstringLength(value1.toLowerCase(), value2.toLowerCase());
-    return (commonLength / value2.length) * 100;
-  }
 
-  private getCommonSubstringLength(value1: string, value2: string): number {
+    const dp: number[][] = Array(value1.length + 1).fill(0).map(() => Array(value2.length + 1).fill(0));
     let maxLength = 0;
-    for (let i = 0; i < value1.length; i++) {
-      for (let j = i + 1; j <= value1.length; j++) {
-        const substring = value1.substring(i, j);
-        if (value2.includes(substring) && substring.length > maxLength) {
-          maxLength = substring.length;
+
+    for (let i = 1; i <= value1.length; i++) {
+      for (let j = 1; j <= value2.length; j++) {
+        if (value1[i - 1] === value2[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+          maxLength = Math.max(maxLength, dp[i][j]);
         }
       }
     }
-    return maxLength;
+
+    return (maxLength / value2.length) * 100;
   }
 }
