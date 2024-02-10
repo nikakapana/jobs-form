@@ -25,36 +25,28 @@ export class InputCompareComponent implements OnInit {
   }
 
 
-  private calculateMatchPercentages(): void {
-    this.matchPercentages = this.value2.map(sentence => {
-      const words = sentence.split(' ');
-      const matchScores = words.map(word => 1 - (this.levenshteinDistance(this.value1.toLowerCase(), word.toLowerCase()) / Math.max(this.value1.length, word.length)));
-      const maxScore = Math.max(...matchScores);
-      return maxScore * 100;
-    });
+  calculateMatchPercentages(): void {
+    for (const item of this.value2) {
+      this.matchPercentages.push(this.calculateMatchPercentage(this.value1.toLowerCase(), item.toLowerCase()));
+    }
   }
 
-  private levenshteinDistance(a: string, b: string): number {
-    const matrix: number[][] = [];
+  calculateMatchPercentage(value1: string, value2: string): number {
+    if (!value2.length) return 0;
 
-    for (let i = 0; i <= a.length; i++) {
-      matrix[i] = [i];
-    }
-    for (let j = 0; j <= b.length; j++) {
-      matrix[0][j] = j;
-    }
+    const dp: number[][] = Array(value1.length + 1).fill(0).map(() => Array(value2.length + 1).fill(0));
+    let maxLength = 0;
 
-    for (let i = 1; i <= a.length; i++) {
-      for (let j = 1; j <= b.length; j++) {
-        const substitutionCost = a[i - 1] === b[j - 1] ? 0 : 1;
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j - 1] + substitutionCost
-        );
+    for (let i = 1; i <= value1.length; i++) {
+      for (let j = 1; j <= value2.length; j++) {
+        if (value1[i - 1] === value2[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+          maxLength = Math.max(maxLength, dp[i][j]);
+        }
       }
     }
 
-    return matrix[a.length][b.length];
+    return (maxLength / value2.length) * 100;
   }
+
 }
