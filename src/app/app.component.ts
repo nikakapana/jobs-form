@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit, Optional} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, NgControl, Validators} from "@angular/forms";
 import {NotificationService} from "./common";
 import {FormHelper, urlValidator} from "./form/utils";
 import {positionLevel} from "./data";
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
               public readonly formHelper: FormHelper,
+
   ) {
 
   }
@@ -55,13 +56,12 @@ export class AppComponent implements OnInit {
 
   addPosition(jobIndex: number): void {
     if (this.jobForm.invalid) {
-      console.log(this.jobForm)
-      this.formHelper.markFormDirty(this.jobForm);
+       this.formHelper.markFormDirty(this.jobForm);
       const jobFormGroup = this.jobForm.get(['jobs', jobIndex]) as FormGroup;
       const urlControl = jobFormGroup.get('companyUrl')?.hasError('invalidUrl');
 
       if (urlControl) {
-        this.notificationService.warning('The URL provided is invalid. Please enter valid URL and try again.');
+        return this.notificationService.warning('The URL provided is invalid. Please enter valid URL and continue.');
       } else {
         return this.notificationService.warning('Please fill up all fields');
       }

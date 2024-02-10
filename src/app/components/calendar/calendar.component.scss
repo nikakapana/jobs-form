@@ -1,0 +1,57 @@
+.calendar-container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  overflow-x: auto;
+}
+
+.calendar-header h1 {
+  font-size: 24px; /* Large font size for the header */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.day-header {
+  width: 14%;
+  text-align: center;
+  font-weight: bold;
+}
+
+td {
+  width: 14%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #e0e0e0;
+}
+
+.today {
+  background-color: #578a34;
+  color: white;
+}
+
+.weekend {
+  background-color: rgba(244, 67, 54, 0.42);
+  color: white;
+}
+
+.non-month-day {
+  background-color: #f0f0f0;
+  color: #bdbdbd;
+}
+
+
+table {
+  width: 600px;
+  height: 500px;
+}
+.clock {
+  font-size: 24px;
+  font-family: 'Courier New', Courier, monospace;
+  float: right;
+}
+
+h1 {
+  display: flex;
+  justify-content: space-evenly;
+}

@@ -11,31 +11,16 @@ import {NzModalService} from "ng-zorro-antd/modal";
 export class AppHeaderComponent {
 
 
-  currentDate = new Date()
-
-    public searchForm: FormGroup = new FormGroup({
-        search: new FormControl(null),
-        positionIds: new FormControl(null),
-        departmentIds: new FormControl(null),
-    });
-    date?: any = new Date();
-    dateFormat = 'yyyy/MM/dd';
-    dayDetail = false;
-
   constructor(private modal: NzModalService,) {}
 
-    dateRangeFilter: FormGroup = new FormGroup({
-        startDate: new FormControl(null),
-        endDate: new FormControl(null),
-    });
-  search?: string;
+
 
 
   openCalendar() {
     this.modal.create({
       nzTitle: 'Calendar',
       nzContent: CalendarComponent,
-      nzWidth: '400px',})
+      nzWidth: '800px',})
   }
 
 }

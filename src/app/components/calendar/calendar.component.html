@@ -1,1 +1,35 @@
-<p>calendar works!</p>
+<div class="calendar-container">
+  <div class="calendar-header">
+    <h1><span style="float: left">{{ getMonthName(currentMonth) }} {{currentDay}} {{ currentYear }}</span>
+      <span class="clock" >
+      {{ time$ | async }}
+    </span>
+    </h1>
+
+  </div>
+  <table mat-table class="mat-elevation-z8">
+    <thead>
+    <tr>
+      <th class="day-header">Sun</th>
+      <th class="day-header">Mon</th>
+      <th class="day-header">Tue</th>
+      <th class="day-header">Wed</th>
+      <th class="day-header">Thu</th>
+      <th class="day-header">Fri</th>
+      <th class="day-header">Sat</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let week of weeks">
+      <td *ngFor="let dateInfo of week"
+          [ngClass]="{
+        'today': dateInfo.isToday,
+        'weekend': dateInfo.isWeekend && !dateInfo.isToday,
+        'non-month-day': dateInfo.day === 0
+      }">
+        {{ dateInfo.day || '' }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
