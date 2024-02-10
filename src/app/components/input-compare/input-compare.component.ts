@@ -26,35 +26,25 @@ export class InputCompareComponent implements OnInit {
 
 
   private calculateMatchPercentages(): void {
-    this.matchPercentages = this.value2.map(sentence => {
-      const words = sentence.split(' ');
-      const matchScores = words.map(word => 1 - (this.levenshteinDistance(this.value1.toLowerCase(), word.toLowerCase()) / Math.max(this.value1.length, word.length)));
-      const maxScore = Math.max(...matchScores);
-      return maxScore * 100;
-    });
+    this.matchPercentages = this.value2.map(item => this.calculateMatchPercentage(this.value1, item));
   }
 
-  private levenshteinDistance(a: string, b: string): number {
-    const matrix: number[][] = [];
+  private calculateMatchPercentage(value1: string, value2: string): number {
+    if (!value2.length) return 0;
+    const commonLength = this.getCommonSubstringLength(value1.toLowerCase(), value2.toLowerCase());
+    return (commonLength / value2.length) * 100;
+  }
 
-    for (let i = 0; i <= a.length; i++) {
-      matrix[i] = [i];
-    }
-    for (let j = 0; j <= b.length; j++) {
-      matrix[0][j] = j;
-    }
-
-    for (let i = 1; i <= a.length; i++) {
-      for (let j = 1; j <= b.length; j++) {
-        const substitutionCost = a[i - 1] === b[j - 1] ? 0 : 1;
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j - 1] + substitutionCost
-        );
+  private getCommonSubstringLength(value1: string, value2: string): number {
+    let maxLength = 0;
+    for (let i = 0; i < value1.length; i++) {
+      for (let j = i + 1; j <= value1.length; j++) {
+        const substring = value1.substring(i, j);
+        if (value2.includes(substring) && substring.length > maxLength) {
+          maxLength = substring.length;
+        }
       }
     }
-
-    return matrix[a.length][b.length];
+    return maxLength;
   }
 }
