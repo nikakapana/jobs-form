@@ -1,0 +1,23 @@
+<div nz-row [nzGutter]="5" nzAlign="middle" nzJustify="space-between">
+    <div nz-col nzFlex="initial">
+        <div nz-row [nzGutter]="5" nzAlign="bottom">
+
+            <div nz-col nzFlex="initial">
+
+                    <button (click)="openCalendar()" nz-button nzType="default" >Calendar
+                    </button>
+
+
+            </div>
+            <div nz-col nzFlex="initial">
+                <dga-input
+                    placeholder="ძებნა"
+                    [(ngModel)]="search"
+
+                ></dga-input>
+            </div>
+        </div>
+    </div>
+
+</div>
+

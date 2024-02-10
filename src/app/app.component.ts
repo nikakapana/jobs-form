@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "./common";
 import {FormHelper, urlValidator} from "./form/utils";
 import {positionLevel} from "./data";
+
 
 @Component({
   selector: 'app-root',
@@ -25,12 +26,8 @@ export class AppComponent implements OnInit {
       jobs: this.fb.array([])
     });
 
-
   }
 
-  get companyUrl() {
-    return this.jobForm.get('companyUrl');
-  }
 
 
   get jobs(): FormArray {
@@ -60,7 +57,14 @@ export class AppComponent implements OnInit {
     if (this.jobForm.invalid) {
       console.log(this.jobForm)
       this.formHelper.markFormDirty(this.jobForm);
-      return this.notificationService.warning('please fill-up all fields')
+      const jobFormGroup = this.jobForm.get(['jobs', jobIndex]) as FormGroup;
+      const urlControl = jobFormGroup.get('companyUrl')?.hasError('invalidUrl');
+
+      if (urlControl) {
+        this.notificationService.warning('The URL provided is invalid. Please enter valid URL and try again.');
+      } else {
+        return this.notificationService.warning('Please fill up all fields');
+      }
     }
     const positions = this.jobs.at(jobIndex).get('positions') as FormArray;
     const positionFormGroup = this.fb.group({
@@ -74,6 +78,7 @@ export class AppComponent implements OnInit {
       positionFormGroup.markAsUntouched();
     }, 0);
     positions.push(positionFormGroup);
+
   }
 
 
@@ -86,4 +91,7 @@ export class AppComponent implements OnInit {
   getPositions(jobIndex: number): FormArray {
     return this.jobs.at(jobIndex).get('positions') as FormArray;
   }
+
+
+
 }
