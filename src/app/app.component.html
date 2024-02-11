@@ -13,15 +13,15 @@
         <div *ngFor="let job of jobs.controls; let i = index; last as isLast" [formGroupName]="i">
           <div style="display: flex; justify-content: center; align-items: center; gap: 5px">
             <div nz-col nzSpan='9'>
-              <dga-input label="*company Name" formControlName="companyName"
+              <dga-input label="*Company Name" formControlName="companyName"
                          placeholder="Enter company name"></dga-input>
             </div>
             <div nz-col nzSpan='9'>
 
-              <dga-input label="*companyUrl" formControlName="companyUrl" placeholder="Enter company URL"></dga-input>
+              <dga-input label="CompanyUrl" formControlName="companyUrl" placeholder="Enter company URL"></dga-input>
 
             </div>
-            <textarea formControlName="companyDescription" style="border-radius: 15px; height: 60px;" placeholder="Enter company description..."></textarea>
+            <dga-textarea label="*Company Description" formControlName="companyDescription" style="border-radius: 15px; height: 60px;" placeholder="Enter company description..."></dga-textarea>
 
           </div>
           <button nz-button style="border-radius: 15px" nzType="primary" (click)="addPosition(i)">Add Position

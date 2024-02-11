@@ -1,6 +1,6 @@
 <div class="calendar-container">
   <div class="calendar-header">
-    <h1><span style="float: left">{{ getMonthName(currentMonth) }} {{currentDay}} {{ currentYear }}</span>
+    <h1><span style="float: left"> {{getFormattedCurrentDate()}}</span>
       <span class="clock" >
       {{ time$ | async }}
     </span>

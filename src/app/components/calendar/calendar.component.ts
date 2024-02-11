@@ -67,9 +67,15 @@ export class CalendarComponent implements OnInit {
     return dayOfWeek === 0 || dayOfWeek === 6;
   }
 
-  getMonthName(monthIndex: number): string {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
-    return monthNames[monthIndex];
+
+  getFormattedCurrentDate(): string {
+    return this.currentDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
+
+
 }

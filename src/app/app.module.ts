@@ -23,6 +23,7 @@ import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {AppHeaderComponent} from "./components/app-header/app-header.component";
 import {NzModalModule} from "ng-zorro-antd/modal";
 import { CalendarComponent } from './components/calendar/calendar.component';
+import {TextareaModule} from "./form/textarea";
 
 registerLocaleData(en);
 
@@ -32,25 +33,26 @@ registerLocaleData(en);
     AppHeaderComponent,
     CalendarComponent
   ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    DatepickerModule,
-    InputModule,
-    NzGridModule,
-    NzButtonModule,
-    NzTableModule,
-    NzFormModule,
-    SelectModule,
-    NzDividerModule,
-    NzSpaceModule,
-    NzSwitchModule,
-    NzLayoutModule,
-    NzModalModule
-  ],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        DatepickerModule,
+        InputModule,
+        NzGridModule,
+        NzButtonModule,
+        NzTableModule,
+        NzFormModule,
+        SelectModule,
+        NzDividerModule,
+        NzSpaceModule,
+        NzSwitchModule,
+        NzLayoutModule,
+        NzModalModule,
+        TextareaModule
+    ],
   providers: [
     {provide: NZ_I18N, useValue: en_US}
   ],
