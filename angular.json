@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "jobs-form:build:production"
+              "buildTarget": "jobs-form:build:production"
             },
             "development": {
-              "browserTarget": "jobs-form:build:development"
+              "buildTarget": "jobs-form:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jobs-form:build"
+            "buildTarget": "jobs-form:build"
           }
         },
         "test": {
