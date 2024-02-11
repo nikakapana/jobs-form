@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {interval, map, Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { interval, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
   currentDate = new Date();
@@ -13,18 +13,17 @@ export class CalendarComponent implements OnInit {
   currentYear = this.currentDate.getFullYear();
   weeks: any[] = [];
   time$: Observable<string> = interval(1000).pipe(
-    map(() => new Date().toLocaleTimeString(
-      'en-US', {
+    map(() =>
+      new Date().toLocaleTimeString('en-US', {
         hour12: false,
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit'
-      }
-    ))
+        second: '2-digit',
+      }),
+    ),
   );
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.generateCalendar();
@@ -37,7 +36,6 @@ export class CalendarComponent implements OnInit {
 
     date.setDate(date.getDate() - firstDayOfMonth);
 
-
     for (let week = 0; week < 6; week++) {
       let weekDates = [];
 
@@ -46,7 +44,7 @@ export class CalendarComponent implements OnInit {
           date: new Date(date),
           day: date.getMonth() === this.currentMonth ? date.getDate() : 0,
           isToday: this.isToday(date),
-          isWeekend: this.isWeekend(date)
+          isWeekend: this.isWeekend(date),
         });
         date.setDate(date.getDate() + 1);
       }
@@ -57,9 +55,11 @@ export class CalendarComponent implements OnInit {
   }
 
   isToday(date: Date): boolean {
-    return date.getDate() === this.currentDay &&
+    return (
+      date.getDate() === this.currentDay &&
       date.getMonth() === this.currentMonth &&
-      date.getFullYear() === this.currentYear;
+      date.getFullYear() === this.currentYear
+    );
   }
 
   isWeekend(date: Date): boolean {
@@ -67,15 +67,12 @@ export class CalendarComponent implements OnInit {
     return dayOfWeek === 0 || dayOfWeek === 6;
   }
 
-
   getFormattedCurrentDate(): string {
     return this.currentDate.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
-
-
 }

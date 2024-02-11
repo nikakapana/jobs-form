@@ -1,37 +1,46 @@
 <nz-form-item>
-
-  <nz-form-label class="label" [nzSpan]="24" *ngIf="label"
-                 [nzRequired]="required"
-                 [nzFor]="inputId">{{ label}}</nz-form-label>
+  @if (label) {
+    <nz-form-label
+      class="label"
+      [nzSpan]="24"
+      [nzRequired]="required"
+      [nzFor]="inputId"
+      >{{ label }}</nz-form-label
+    >
+  }
 
   <nz-form-control
     [nzSpan]="24"
     [nzErrorTip]="dateErrorTpl"
-    [nzValidateStatus]="(ngControl?.control?.dirty || ngControl?.control?.touched) && ngControl?.control?.invalid? 'error' : ''"
+    [nzValidateStatus]="
+      (ngControl?.control?.dirty || ngControl?.control?.touched) &&
+      ngControl?.control?.invalid
+        ? 'error'
+        : ''
+    "
   >
-    <nz-date-picker [nzShowTime]="nzShowTime"
-                    [nzFormat]="nzFormat"
-                    [nzPlaceHolder]="placeholder"
-                    [nzAllowClear]="allowClear"
-                    [nzDisabledDate]="disableFutureDates"
-                    (blur)="blur()"
-                    [id]="inputId"
-                    [ngModel]="value"
-                    (ngModelChange)="updateAndNotify($event)"
-                    style="width: 100%"
+    <nz-date-picker
+      [nzShowTime]="nzShowTime"
+      [nzFormat]="nzFormat"
+      [nzPlaceHolder]="placeholder"
+      [nzAllowClear]="allowClear"
+      [nzDisabledDate]="disableFutureDates"
+      (blur)="blur()"
+      [id]="inputId"
+      [ngModel]="value"
+      (ngModelChange)="updateAndNotify($event)"
+      style="width: 100%"
     ></nz-date-picker>
 
     <ng-template #dateErrorTpl let-control>
       <div class="error-message">
-        <ng-container *ngIf="errorMessage; else noCustomMessage">
-          {{errorMessage}}
-        </ng-container>
-        <ng-template #noCustomMessage>
-          <ng-container *ngIf="ngControl.hasError('required')">
+        @if (errorMessage) {
+          {{ errorMessage }}
+        } @else {
+          @if (ngControl.hasError("required")) {
             მითითება სავალდებულოა
-          </ng-container>
-        </ng-template>
-
+          }
+        }
       </div>
     </ng-template>
   </nz-form-control>

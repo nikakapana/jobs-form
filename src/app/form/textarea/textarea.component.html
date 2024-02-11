@@ -1,33 +1,39 @@
 <nz-form-item>
-  <nz-form-label [nzSpan]="24" *ngIf="label" [nzRequired]="required"
-                 [nzFor]="inputId">{{ label }}</nz-form-label>
+  @if (label) {
+    <nz-form-label [nzSpan]="24" [nzRequired]="required" [nzFor]="inputId">{{
+      label
+    }}</nz-form-label>
+  }
   <nz-form-control
     [nzSpan]="24"
     [nzErrorTip]="selectErrorTpl"
-    [nzValidateStatus]="(ngControl?.dirty || ngControl?.touched) && ngControl?.invalid? 'error' : ''"
+    [nzValidateStatus]="
+      (ngControl?.dirty || ngControl?.touched) && ngControl?.invalid
+        ? 'error'
+        : ''
+    "
   >
-    <textarea rows="4"
-              nz-input
-              [nzAutosize]="{ minRows: 2, maxRows: 6 }"
-              [id]="inputId"
-              [disabled]="disabled"
-              [placeholder]="placeholder"
-              [ngModel]="value"
-              (ngModelChange)="updateAndNotify($event)"
-              (blur)="blur()"
-              [rows]="rows"
+    <textarea
+      rows="4"
+      nz-input
+      [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+      [id]="inputId"
+      [disabled]="disabled"
+      [placeholder]="placeholder"
+      [ngModel]="value"
+      (ngModelChange)="updateAndNotify($event)"
+      (blur)="blur()"
+      [rows]="rows"
     ></textarea>
     <ng-template #selectErrorTpl let-control>
       <div class="error-message">
-        <ng-container *ngIf="errorMessage; else noCustomMessage">
-          {{errorMessage}}
-        </ng-container>
-        <ng-template #noCustomMessage>
-          <ng-container *ngIf="ngControl.hasError('required')">
+        @if (errorMessage) {
+          {{ errorMessage }}
+        } @else {
+          @if (ngControl.hasError("required")) {
             მითითება სავალდებულოა
-          </ng-container>
-        </ng-template>
-
+          }
+        }
       </div>
     </ng-template>
   </nz-form-control>

@@ -1,40 +1,44 @@
-import {Component, Inject, Input, OnInit, SimpleChanges} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {NZ_MODAL_DATA} from "ng-zorro-antd/modal";
+import { Component, Inject, Input, OnInit, SimpleChanges } from '@angular/core';
+
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-input-compare',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './input-compare.component.html',
-  styleUrls: ['./input-compare.component.scss']
+  styleUrls: ['./input-compare.component.scss'],
 })
 export class InputCompareComponent implements OnInit {
-
   matchPercentages: number[] = [];
-  value1 = this.params.value1
-  value2 = this.params.value2
+  value1 = this.params.value1;
+  value2 = this.params.value2;
 
   constructor(
-    @Inject(NZ_MODAL_DATA) public params: { value1: string, value2: string[] }
-  ) {
-  }
+    @Inject(NZ_MODAL_DATA) public params: { value1: string; value2: string[] },
+  ) {}
 
   ngOnInit(): void {
     this.calculateMatchPercentages();
   }
 
-
   calculateMatchPercentages(): void {
     for (const item of this.value2) {
-      this.matchPercentages.push(this.calculateMatchPercentage(this.value1.toLowerCase(), item.toLowerCase()));
+      this.matchPercentages.push(
+        this.calculateMatchPercentage(
+          this.value1.toLowerCase(),
+          item.toLowerCase(),
+        ),
+      );
     }
   }
 
   calculateMatchPercentage(value1: string, value2: string): number {
     if (!value2.length) return 0;
 
-    const dp: number[][] = Array(value1.length + 1).fill(0).map(() => Array(value2.length + 1).fill(0));
+    const dp: number[][] = Array(value1.length + 1)
+      .fill(0)
+      .map(() => Array(value2.length + 1).fill(0));
     let maxLength = 0;
 
     for (let i = 1; i <= value1.length; i++) {
@@ -48,5 +52,4 @@ export class InputCompareComponent implements OnInit {
 
     return (maxLength / value2.length) * 100;
   }
-
 }

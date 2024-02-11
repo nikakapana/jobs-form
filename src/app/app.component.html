@@ -1,74 +1,137 @@
 <nz-header>
-<app-header></app-header>
+  <app-header></app-header>
 </nz-header>
 
 <form [formGroup]="jobForm">
   <div class="wrapper">
     <h3>*Add your job experience here</h3>
-    <button nz-button style="border-radius: 15px" nzType="primary" (click)="addJob()">Add Job</button>
-    <ng-container *ngIf="jobs.controls.length > 0">
-
-
+    <button
+      nz-button
+      style="border-radius: 15px"
+      nzType="primary"
+      (click)="addJob()"
+    >
+      Add Job
+    </button>
+    @if (jobs.controls.length > 0) {
       <div formArrayName="jobs">
-        <div *ngFor="let job of jobs.controls; let i = index; last as isLast" [formGroupName]="i">
-          <div style="display: flex; justify-content: center; align-items: center; gap: 5px">
-            <div nz-col nzSpan='9'>
-              <dga-input label="*Company Name" formControlName="companyName"
-                         placeholder="Enter company name"></dga-input>
+        @for (
+          job of jobs.controls;
+          track job;
+          let i = $index;
+          let isLast = $last
+        ) {
+          <div [formGroupName]="i">
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+              "
+            >
+              <div nz-col nzSpan="9">
+                <dga-input
+                  label="*Company Name"
+                  formControlName="companyName"
+                  placeholder="Enter company name"
+                ></dga-input>
+              </div>
+              <div nz-col nzSpan="9">
+                <dga-input
+                  label="CompanyUrl"
+                  formControlName="companyUrl"
+                  placeholder="Enter company URL"
+                ></dga-input>
+              </div>
+              <dga-textarea
+                label="*Company Description"
+                formControlName="companyDescription"
+                style="border-radius: 15px; height: 60px"
+                placeholder="Enter company description..."
+              ></dga-textarea>
             </div>
-            <div nz-col nzSpan='9'>
-
-              <dga-input label="CompanyUrl" formControlName="companyUrl" placeholder="Enter company URL"></dga-input>
-
-            </div>
-            <dga-textarea label="*Company Description" formControlName="companyDescription" style="border-radius: 15px; height: 60px;" placeholder="Enter company description..."></dga-textarea>
-
-          </div>
-          <button nz-button style="border-radius: 15px" nzType="primary" (click)="addPosition(i)">Add Position
-          </button>
-
-          <nz-divider></nz-divider>
-
-          <div formArrayName="positions">
-
-            <div *ngFor="let position of getPositions(i).controls; let j = index; last as lastPos" [formGroupName]="j">
-
-              <dga-input formControlName="positionName" placeholder="Enter position name"></dga-input>
-              <div nz-col nzFlex="initial">
-                <dga-select
-                  placeholder="position level"
-                  formControlName="positionLevel"
-                  [data]="positionLevels$"
-                  id="accountStatus"
-                  displayMember="name"
-                  valueMember="value"
+            <button
+              nz-button
+              style="border-radius: 15px"
+              nzType="primary"
+              (click)="addPosition(i)"
+            >
+              Add Position
+            </button>
+            <nz-divider></nz-divider>
+            <div formArrayName="positions">
+              @for (
+                position of getPositions(i).controls;
+                track position;
+                let j = $index;
+                let lastPos = $last
+              ) {
+                <div [formGroupName]="j">
+                  <dga-input
+                    formControlName="positionName"
+                    placeholder="Enter position name"
+                  ></dga-input>
+                  <div nz-col nzFlex="initial">
+                    <dga-select
+                      placeholder="position level"
+                      formControlName="positionLevel"
+                      [data]="positionLevels$"
+                      id="accountStatus"
+                      displayMember="name"
+                      valueMember="value"
+                    >
+                    </dga-select>
+                  </div>
+                  <dga-datepicker
+                    formControlName="startDate"
+                    placeholder="Start date"
+                  ></dga-datepicker>
+                  <div>
+                    <nz-space style="margin-bottom: 5px">
+                      <span style="font-weight: bold; margin-right: 5px"
+                        >Still working -
+                      </span>
+                      <nz-switch formControlName="currWorking"></nz-switch>
+                    </nz-space>
+                  </div>
+                  @if (!position.get("currWorking")?.value) {
+                    <dga-datepicker
+                      formControlName="endDate"
+                      placeholder="End date"
+                    ></dga-datepicker>
+                  }
+                  <button
+                    nz-button
+                    nzDanger
+                    (click)="removePosition(i, j)"
+                    style="margin-right: 5px"
+                  >
+                    Remove Position
+                  </button>
+                  @if (!lastPos) {
+                    <nz-divider></nz-divider>
+                  }
+                </div>
+              }
+              @if (job) {
+                <button
+                  style="margin-top: 5px"
+                  nzType="primary"
+                  nz-button
+                  nzDanger
+                  (click)="removeJob(i)"
                 >
-
-                </dga-select>
-              </div>
-
-              <dga-datepicker formControlName="startDate" placeholder="Start date"></dga-datepicker>
-              <div>
-              <nz-space style="margin-bottom: 5px">
-                <span style="font-weight: bold;margin-right: 5px;">Still working - </span>
-                <nz-switch formControlName="currWorking"></nz-switch>
-              </nz-space>
-              </div>
-              <dga-datepicker *ngIf="!position.get('currWorking')?.value" formControlName="endDate" placeholder="End date"></dga-datepicker>
-
-              <button nz-button nzDanger (click)="removePosition(i, j)" style="margin-right: 5px">Remove Position</button>
-              <nz-divider *ngIf="!lastPos"></nz-divider>
-
+                  Remove Job
+                </button>
+              }
             </div>
-            <button style="margin-top: 5px" nzType="primary" *ngIf="job" nz-button nzDanger (click)="removeJob(i)">Remove Job</button>
-
+            @if (!isLast) {
+              <nz-divider></nz-divider>
+            }
           </div>
-
-          <nz-divider *ngIf="!isLast"></nz-divider>
-
-        </div>
-        </div>
-
-    </ng-container>
+        }
+      </div>
+    }
   </div>
 </form>

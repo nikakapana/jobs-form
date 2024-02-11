@@ -1,8 +1,15 @@
-<div >
+<div>
   <h2>Inputs match comparison</h2>
   <ul>
-    <li *ngFor="let matchPercentage of matchPercentages; let i = index">
-      {{value1}} Match for "{{params.value2[i]}}": {{matchPercentage.toFixed(2)}}%
-    </li>
+    @for (
+      matchPercentage of matchPercentages;
+      track matchPercentage;
+      let i = $index
+    ) {
+      <li>
+        {{ value1 }} Match for "{{ params.value2[i] }}":
+        {{ matchPercentage.toFixed(2) }}%
+      </li>
+    }
   </ul>
 </div>

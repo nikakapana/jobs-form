@@ -9,9 +9,9 @@
 .ant-input {
   color: var(--text-color);
 }
-.round-border-edge{
+.round-border-edge {
   &.ant-input-group {
-    >.ant-input{
+    > .ant-input {
       border-radius: 7px;
     }
   }

@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NzSelectModeType} from 'ng-zorro-antd/select';
-import {DefaultValueAccessor, InputBase} from "../../common";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NzSelectModeType } from 'ng-zorro-antd/select';
+import { DefaultValueAccessor, InputBase } from '../../common';
 
 let nextUniqueId = 0;
 
@@ -60,6 +60,6 @@ export class SelectComponent extends InputBase {
   }
 
   openChange($event: any) {
-    this.openChanged.emit(true)
+    this.openChanged.emit(true);
   }
 }

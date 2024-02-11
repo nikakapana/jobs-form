@@ -1,8 +1,6 @@
-import {Dropdown} from "./dropdown";
-
+import { Dropdown } from './dropdown';
 
 export const positionLevel: Dropdown[] = [
-
   {
     value: 'junior',
     name: 'Junior',
@@ -14,5 +12,5 @@ export const positionLevel: Dropdown[] = [
   {
     value: 'senior',
     name: 'Senior',
-  }
+  },
 ];

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {DefaultValueAccessor, InputBase} from "../../common";
+import { Component, Input } from '@angular/core';
+import { DefaultValueAccessor, InputBase } from '../../common';
 
 let nextUniqueId = 0;
 
@@ -7,17 +7,16 @@ let nextUniqueId = 0;
   selector: 'dga-datepicker',
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.scss'],
-  providers: [DefaultValueAccessor]
-
+  providers: [DefaultValueAccessor],
 })
 export class DatepickerComponent extends InputBase {
   @Input() label: string | undefined;
   @Input() validateStatus = 'success';
   @Input() errorMessage: string | null = null;
-  @Input() placeholder = "00/00/0000";
+  @Input() placeholder = '00/00/0000';
   @Input() formControlName: string | undefined;
   @Input() nzShowTime = false;
-  @Input() nzFormat = "dd/MM/yyyy";
+  @Input() nzFormat = 'dd/MM/yyyy';
   @Input() allowClear: boolean = true;
   @Input() nzDisabledDate?: Date;
   public date: any = null;
@@ -34,6 +33,6 @@ export class DatepickerComponent extends InputBase {
       const currentDate = new Date();
       return nzDisabledDate > currentDate;
     }
-    return false
+    return false;
   };
 }

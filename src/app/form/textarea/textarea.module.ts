@@ -6,8 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
-    declarations: [TextareaComponent],
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, NzFormModule, NzInputModule],
-    exports: [TextareaComponent],
+  declarations: [TextareaComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NzFormModule,
+    NzInputModule,
+  ],
+  exports: [TextareaComponent],
 })
 export class TextareaModule {}

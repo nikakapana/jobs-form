@@ -8,8 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
-    declarations: [SelectComponent],
-    imports: [CommonModule, NzFormModule, NzIconModule, NzSelectModule, FormsModule, NzToolTipModule],
-    exports: [SelectComponent],
+  declarations: [SelectComponent],
+  imports: [
+    CommonModule,
+    NzFormModule,
+    NzIconModule,
+    NzSelectModule,
+    FormsModule,
+    NzToolTipModule,
+  ],
+  exports: [SelectComponent],
 })
 export class SelectModule {}

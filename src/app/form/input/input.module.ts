@@ -7,8 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
-    declarations: [InputComponent],
-    imports: [CommonModule, NzFormModule, NzInputModule, FormsModule, NzIconModule],
-    exports: [InputComponent],
+  declarations: [InputComponent],
+  imports: [
+    CommonModule,
+    NzFormModule,
+    NzInputModule,
+    FormsModule,
+    NzIconModule,
+  ],
+  exports: [InputComponent],
 })
 export class InputModule {}
