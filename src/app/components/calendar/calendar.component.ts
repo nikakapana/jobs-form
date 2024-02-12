@@ -12,6 +12,7 @@ export class CalendarComponent implements OnInit {
   currentMonth = this.currentDate.getMonth();
   currentYear = this.currentDate.getFullYear();
   weeks: any[] = [];
+  weekdays = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat','sun']
   time$: Observable<string> = interval(1000).pipe(
     map(() =>
       new Date().toLocaleTimeString('en-US', {
@@ -32,7 +33,8 @@ export class CalendarComponent implements OnInit {
   generateCalendar() {
     let dates = [];
     let date = new Date(this.currentYear, this.currentMonth, 1);
-    let firstDayOfMonth = date.getDay();
+    let firstDayOfMonth = date.getDay() - 1;
+    firstDayOfMonth = firstDayOfMonth === -1 ? 6 : firstDayOfMonth;
 
     date.setDate(date.getDate() - firstDayOfMonth);
 
@@ -54,6 +56,8 @@ export class CalendarComponent implements OnInit {
     this.weeks = dates;
   }
 
+
+
   isToday(date: Date): boolean {
     return (
       date.getDate() === this.currentDay &&
@@ -66,7 +70,6 @@ export class CalendarComponent implements OnInit {
     let dayOfWeek = date.getDay();
     return dayOfWeek === 0 || dayOfWeek === 6;
   }
-
   getFormattedCurrentDate(): string {
     return this.currentDate.toLocaleDateString('en-US', {
       weekday: 'long',

@@ -10,13 +10,10 @@
   <table mat-table class="mat-elevation-z8">
     <thead>
       <tr>
-        <th class="day-header">Sun</th>
-        <th class="day-header">Mon</th>
-        <th class="day-header">Tue</th>
-        <th class="day-header">Wed</th>
-        <th class="day-header">Thu</th>
-        <th class="day-header">Fri</th>
-        <th class="day-header">Sat</th>
+      @for(day of weekdays; track day; let i = $index;) {
+        <th class="day-header">{{weekdays[i]}}</th>
+
+        }
       </tr>
     </thead>
     <tbody>
